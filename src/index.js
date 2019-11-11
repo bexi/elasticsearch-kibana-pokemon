@@ -6,15 +6,14 @@ const elastic = require("./elastic/");
 
   if (isElasticReady) {
     // check if index already exists
-    const elasticIndex = null;
+    const indexExists = await elastic.indexExists();
 
     // if not - create index and add data to it
-    if(!elasticIndex){
-      // create index
-      // create mapping
-      // populate the index
+    if(!indexExists){
+      elastic.createIndex();
+      elastic.createMapping();
+      elastic.populateIndex();
     }
-
   }
 
 })();
