@@ -1,0 +1,19 @@
+{
+  "name": "elasticsearch-kibana-pokemon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bexi/elasticsearch-kibana-pokemon.git"
+  },
+  "author": "Rebecka Reitmaier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bexi/elasticsearch-kibana-pokemon/issues"
+  },
+  "homepage": "https://github.com/bexi/elasticsearch-kibana-pokemon#readme"
+}
