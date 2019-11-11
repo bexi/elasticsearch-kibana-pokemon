@@ -3,6 +3,7 @@ const elasticUrl = "http://localhost:9200";
 const esClient   = new Client({ node: elasticUrl, maxRetries: 5});
 const index      = "pokemons";
 const type       = "pokemons";
+const pokemons  = require(`./pokemons.json`);
 
 /**
  * @function connected
@@ -75,10 +76,13 @@ async function createMapping () {
       name: {
         type: "text"
       },
-      type_1: {
+      'type 1': {
         type: "text"
       },
-      type_2: {
+      'type 2': {
+        type: "text"
+      },
+      legendary: {
         type: "text"
       }
     };
@@ -99,6 +103,35 @@ async function createMapping () {
 
 function populateIndex(){
   console.log('Populate index');
+}
+
+/**
+ * @function createESAction
+ * @returns {{index: { _index: string, _type: string }}}
+ * @description Returns an ElasticSearch Action in order to
+ *              correctly index documents.
+ */
+const esAction = {
+  index: {
+    _index: index,
+    _type: type
+  }
+};
+
+/**
+ * @function pupulateIndex
+ * @returns {void}
+ */
+async function populateIndex() {
+
+  const docs = [];
+
+  for (const pokemon of pokemons) {
+    docs.push(esAction);
+    docs.push(pokemon);
+  }
+
+  return esClient.bulk({ body: docs });
 }
 
 module.exports = {

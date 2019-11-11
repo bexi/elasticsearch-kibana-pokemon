@@ -10,9 +10,9 @@ const elastic = require("./elastic/");
 
     // if not - create index and add data to it
     if(!indexExists){
-      elastic.createIndex();
-      elastic.createMapping();
-      elastic.populateIndex();
+      await elastic.createIndex();
+      await elastic.createMapping();
+      await elastic.populateIndex();
     }
   }
 
