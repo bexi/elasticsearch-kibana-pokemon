@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+
   "scripts": {
+    "sstart": "node ./src/index.js",
+    "start": "pm2-runtime start ./src/index.js --name node_pokemon",
+    "stop": "pm2-runtime stop node_pokemon ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/bexi/elasticsearch-kibana-pokemon/issues"
   },
-  "homepage": "https://github.com/bexi/elasticsearch-kibana-pokemon#readme"
+  "homepage": "https://github.com/bexi/elasticsearch-kibana-pokemon#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "elasticsearch": "^16.5.0",
+    "express": "^4.17.1"
+  }
 }
