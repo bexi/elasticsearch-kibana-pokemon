@@ -15,6 +15,7 @@ const data = require("./data");
       await elastic.createIndex();
       await elastic.createMapping();
       await data.populateIndex();
+      console.log('Init index with data');
     }
   }
 

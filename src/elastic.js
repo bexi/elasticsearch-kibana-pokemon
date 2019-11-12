@@ -40,7 +40,7 @@ function indexExists() {
     try {
       const response = await esClient.indices.exists({index: index});
       console.log('Does index exists? ', response.body);
-      resolve(response);
+      resolve(response.body);
     }catch (e) {
       console.log('Error when creating an index. Error: ', e);
       resolve(false);
