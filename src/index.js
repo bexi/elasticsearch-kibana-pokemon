@@ -1,4 +1,6 @@
-const elastic = require("./elastic/");
+const elastic = require("./elastic");
+const server = require("./server");
+const data = require("./data");
 
 (async function main() {
 
@@ -12,8 +14,10 @@ const elastic = require("./elastic/");
     if(!indexExists){
       await elastic.createIndex();
       await elastic.createMapping();
-      await elastic.populateIndex();
+      await data.populateIndex();
     }
   }
+
+  server.start();
 
 })();

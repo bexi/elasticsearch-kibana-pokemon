@@ -1,9 +1,9 @@
-const { Client } = require("elasticsearch");
+const { Client } = require("@elastic/elasticsearch");
+
 const elasticUrl = "http://localhost:9200";
-const esClient   = new Client({ node: elasticUrl, maxRetries: 5});
+const esClient   = new Client({ node: elasticUrl });
 const index      = "pokemons";
 const type       = "pokemons";
-const pokemons  = require(`./pokemons.json`);
 
 /**
  * @function connected
@@ -39,8 +39,7 @@ function indexExists() {
   return new Promise(async (resolve) => {
     try {
       const response = await esClient.indices.exists({index: index});
-      console.log(response);
-      console.log('Does index exists? ', response);
+      console.log('Does index exists? ', response.body);
       resolve(response);
     }catch (e) {
       console.log('Error when creating an index. Error: ', e);
@@ -75,15 +74,6 @@ async function createMapping () {
       // name of pokemon
       name: {
         type: "text"
-      },
-      'type 1': {
-        type: "text"
-      },
-      'type 2': {
-        type: "text"
-      },
-      legendary: {
-        type: "text"
       }
     };
 
@@ -101,43 +91,12 @@ async function createMapping () {
   }
 }
 
-function populateIndex(){
-  console.log('Populate index');
-}
-
-/**
- * @function createESAction
- * @returns {{index: { _index: string, _type: string }}}
- * @description Returns an ElasticSearch Action in order to
- *              correctly index documents.
- */
-const esAction = {
-  index: {
-    _index: index,
-    _type: type
-  }
-};
-
-/**
- * @function pupulateIndex
- * @returns {void}
- */
-async function populateIndex() {
-
-  const docs = [];
-
-  for (const pokemon of pokemons) {
-    docs.push(esAction);
-    docs.push(pokemon);
-  }
-
-  return esClient.bulk({ body: docs });
-}
-
 module.exports = {
+  esClient,
   connected,
   indexExists,
   createIndex,
   createMapping,
-  populateIndex
+  index,
+  type,
 }
