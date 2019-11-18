@@ -1,4 +1,4 @@
-const { esClient, index, type } = require("../../elastic");
+const { esclient, index, type } = require("../../elastic");
 
 async function getPokemons(req) {
   const query = {
@@ -13,7 +13,7 @@ async function getPokemons(req) {
       }
     }
   }
-  const { body: { hits } } = await esClient.search({
+  const { body: { hits } } = await esclient.search({
     from:  req.page  || 0,
     size:  req.limit || 100,
     index: index,
@@ -36,15 +36,8 @@ async function getPokemons(req) {
     results,
     values
   }
-
-}
-
-async function insertNewPokemon(quote, author) {
-  console.log('insertNewPokemon');
-  return ;
 }
 
 module.exports = {
-  getPokemons,
-  insertNewPokemon
+  getPokemons
 }

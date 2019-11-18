@@ -19,7 +19,7 @@ const esAction = {
  * @function pupulateIndex
  * @returns {void}
  */
-async function populateIndex() {
+async function pushDataToIndex() {
 
   const docs = [];
 
@@ -28,9 +28,9 @@ async function populateIndex() {
     docs.push(pokemon);
   }
 
-  return elastic.esClient.bulk({ body: docs });
+  return elastic.esclient.bulk({ body: docs });
 }
 
 module.exports = {
-  populateIndex
+  pushDataToIndex
 }

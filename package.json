@@ -1,28 +1,16 @@
 {
-  "name": "elasticsearch-kibana-pokemon",
+  "name": "test-docker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "sstart": "node ./src/index.js",
-    "start": "pm2-runtime start ./src/index.js --name node_pokemon",
-    "stop": "pm2-runtime stop node_pokemon ",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bexi/elasticsearch-kibana-pokemon.git"
-  },
+  "description": "Node.js on Docker",
   "author": "Rebecka Reitmaier",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bexi/elasticsearch-kibana-pokemon/issues"
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./src/server.js"
   },
-  "homepage": "https://github.com/bexi/elasticsearch-kibana-pokemon#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "@elastic/elasticsearch": "^7.3.0",
-    "express": "^4.17.1"
+    "express": "^4.16.1",
+    "dotenv": "^8.0.0",
+    "@elastic/elasticsearch": "npm:@elastic/elasticsearch@^7.0.0",
+    "cors": "^2.8.5"
   }
 }

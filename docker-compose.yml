@@ -1,0 +1,38 @@
+version: '3'
+services:
+  no01:
+    image: node:12.13.0-alpine
+    container_name: no01
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+     - NODE_ENV=local
+     - ES_HOST=es01
+     - NODE_PORT=3000
+     - ELASTIC_URL=http://es01:9200
+    volumes:
+      - .:/code
+    command: npm run start
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+    container_name: es01
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+volumes:
+  elasticsearch-data:
+    driver: local

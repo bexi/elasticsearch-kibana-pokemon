@@ -1,66 +1,31 @@
 const { Client } = require("@elastic/elasticsearch");
+                   require("dotenv").config();
 
-const elasticUrl = "http://localhost:9200";
-const esClient   = new Client({ node: elasticUrl });
+const elasticUrl = process.env.ELASTIC_URL || "http://localhost:9200";
+const esclient   = new Client({ node: elasticUrl });
 const index      = "pokemons";
 const type       = "pokemons";
 
 /**
- * @function connected
- * @returns {Promise<Boolean>}
- * @description
- */
-function connected() {
-  return new Promise(async (resolve) => {
-
-    let connected = false;
-
-    while (!connected) {
-      try {
-        await esClient.cluster.health({});
-        console.log("Successfully connected to ElasticSearch");
-        connected = true;
-      } catch (e) {
-        console.log("Failed to connect to ElasticSearch. Error: ", e);
-      }
-    }
-
-    resolve(true);
-
-  });
-}
-
-/**
- * @function indexExists
- * @returns {Promise<Boolean>}
- * @description
- */
-function indexExists() {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await esClient.indices.exists({index: index});
-      console.log('Does index exists? ', response.body);
-      resolve(response.body);
-    }catch (e) {
-      console.log('Error when creating an index. Error: ', e);
-      resolve(false);
-    }
-  });
-}
-
-/**
  * @function createIndex
- * @returns {Promise<Boolean>}
- * @description
+ * @returns {void}
+ * @description Creates an index in ElasticSearch.
  */
-async function createIndex(){
+
+async function createIndex(index) {
   try {
-    await esClient.indices.create({index: index});
-    console.log('Created index');
-  }catch(e){
-    console.log('Failed to create index. Error: ', e);
+
+    await esclient.indices.create({ index });
+    console.log(`Created index ${index}`);
+
+  } catch (err) {
+
+    console.error(`An error occurred while creating the index ${index}:`);
+    console.error(err);
+
   }
 }
+
 
 /**
  * @function createMapping,
@@ -77,7 +42,7 @@ async function createMapping () {
       }
     };
 
-    await esClient.indices.putMapping({
+    await esclient.indices.putMapping({
       index,
       type,
       include_type_name: true,
@@ -91,12 +56,41 @@ async function createMapping () {
   }
 }
 
-module.exports = {
-  esClient,
-  connected,
-  indexExists,
-  createIndex,
-  createMapping,
-  index,
-  type,
+/**
+ * @function checkConnection
+ * @returns {Promise<Boolean>}
+ * @description Checks if the client is connected to ElasticSearch
+ */
+
+function checkConnection() {
+  return new Promise(async (resolve) => {
+
+    console.log("Checking connection to ElasticSearch...");
+    let isConnected = false;
+
+    while (!isConnected) {
+      try {
+
+        await esclient.cluster.health({});
+        console.log("Successfully connected to ElasticSearch");
+        isConnected = true;
+
+      // eslint-disable-next-line no-empty
+      } catch (_) {
+
+      }
+    }
+
+    resolve(true);
+
+  });
 }
+
+module.exports = {
+  esclient,
+  createMapping,
+  checkConnection,
+  createIndex,
+  index,
+  type
+};
