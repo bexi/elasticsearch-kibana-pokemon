@@ -5,9 +5,9 @@
 * Docker 
 
 ### Build, run and kill 
-docker-compose build --no-cache
-docker-compose up -d 
-docker-compose down --volumes 
+* docker-compose build --no-cache
+* docker-compose up -d 
+* docker-compose down --volumes 
 
 Example request that will show all pokemons that match "grass or poison": 
 http://localhost:3000/pokemons/?text=grass%20poison
