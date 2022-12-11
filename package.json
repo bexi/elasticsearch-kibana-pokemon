@@ -8,7 +8,7 @@
     "start": "node ./src/server.js"
   },
   "dependencies": {
-    "express": "^4.16.1",
+    "express": "^4.17.3",
     "dotenv": "^8.0.0",
     "@elastic/elasticsearch": "npm:@elastic/elasticsearch@^7.0.0",
     "cors": "^2.8.5"
